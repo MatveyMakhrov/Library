@@ -1,0 +1,5 @@
+C:/z/oop/makhrov_m_a/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/z/oop/makhrov_m_a/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
+C:/z/oop/makhrov_m_a/out/build/x64-debug/makhrov_m_a/CMakeFiles/makhrov_m_a.dir
+C:/z/oop/makhrov_m_a/out/build/x64-debug/makhrov_m_a/CMakeFiles/edit_cache.dir
+C:/z/oop/makhrov_m_a/out/build/x64-debug/makhrov_m_a/CMakeFiles/rebuild_cache.dir
