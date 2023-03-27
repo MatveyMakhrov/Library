@@ -1,0 +1,9 @@
+# ninja log v5
+1	1370	7016430833642555	prj.lab/rational/CMakeFiles/rational.dir/rational.cpp.obj	adae1fea77e8154
+1372	1488	7016430834991303	prj.lab/rational/rational.lib	84e659e4ae9085c7
+11	2328	7016430843196204	prj.test/CMakeFiles/rational_test.dir/rational_test.cpp.obj	6ef20a5395457951
+2328	3599	7016430847952582	../../../bin.dbg/rational_test.exe	84fa59838928674a
+0	1500	7016457757308019	prj.lab/rational/CMakeFiles/rational.dir/rational.cpp.obj	adae1fea77e8154
+1501	1594	7016457758373810	prj.lab/rational/rational.lib	84e659e4ae9085c7
+13	2569	7016457768060992	prj.test/CMakeFiles/rational_test.dir/rational_test.cpp.obj	6ef20a5395457951
+2570	3993	7016457771420786	../../../bin.dbg/rational_test.exe	84fa59838928674a

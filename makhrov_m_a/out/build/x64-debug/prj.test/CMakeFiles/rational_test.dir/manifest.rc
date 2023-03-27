@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "C:/z/oop/makhrov_m_a/out/build/x64-debug/prj.test/CMakeFiles/rational_test.dir/embed.manifest"
