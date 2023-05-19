@@ -1,0 +1,20 @@
+#include <iostream>
+
+namespace geo2d::orto {
+
+    class Quad {
+    public:
+        Quad();
+        ~Quad() = default;
+    };
+
+    class Rect : public Quad {
+        Rect();
+        ~Rect() = default;
+    };
+
+    class Square : public Quad {
+        Square();
+        ~Square();
+    };
+}
