@@ -18,3 +18,26 @@ find_package(doctest REQUIRED)
 
 add_subdirectory(prj.lab)
 add_subdirectory(prj.test)
+add_subdirectory(prj.cw)
+
+install(DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE}/
+		DESTINATION bin FILES_MATCHING PATTERN "*test*" EXCLUDE 
+		PATTERN "*" )
+
+find_package(Doxygen)
+
+if(DOXYGEN_FOUND)
+set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+set(DOXYGEN_CONFIGURED_INPUT ${DOXYGEN_IN})
+
+add_custom_target(doc ALL
+COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONFIGURED_INPUT}
+WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+COMMENT "Documentation with doxygen"
+VERBATIM )
+endif()
+
+if(DOXYGEN_FOUND)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/prj.cw/documentation
+DESTINATION .)
+endif()
