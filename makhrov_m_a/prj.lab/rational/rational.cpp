@@ -2,61 +2,66 @@
 #include <iostream>
 
 Rational::Rational() {
-    num_ = 0;
-    denum_ = 1;
+    num = 0;
+    denom = 1;
 }
 Rational::Rational(int32_t numberInp) {
-    num_ = numberInp;
-    denum_ = 1;
+    num = numberInp;
+    denom = 1;
 }
-Rational::Rational(const Rational& rhs) {
-    num_ = rhs.num_;
-    denum_ = rhs.denum_;
+Rational::Rational(const Rational& myRat) {
+    num = myRat.num;
+    denom = myRat.denom;
 }
-Rational::Rational(const int32_t num_inp,
-    const int32_t denum_inp) {
+
+Rational operator-(const Rational rhs) {
+    return (rhs * Rational(-1, 1));
+}
+
+
+Rational::Rational(const int32_t numInp,
+    const int32_t denomInp) {
     reducing();
-    if (denum_inp == 0) {
+    if (denomInp == 0) {
         throw std::invalid_argument("Expected positive denominator");
     }
-    if (denum_inp < 0) {
-        num_ = -num_inp;
-        denum_ = -denum_inp;
+
+    if (denomInp < 0) {
+        num = -numInp;
+        denom = -denomInp;
     }
     else {
-        num_ = num_inp;
-        denum_ = denum_inp;
+        num = numInp;
+        denom = denomInp;
     }
-}
 
+
+}
 
 Rational& Rational::operator=(const Rational& rhs) {  // assignment operators from here
-    num_ = rhs.num_;
-    denum_ = rhs.denum_;
+    num = rhs.num;
+    denom = rhs.denom;
     return *this;
 }
-
 Rational& Rational::operator+=(const Rational& rhs) {
-    int32_t cd = rhs.denum_ / gcd(denum_, rhs.denum_);
-    num_ *= cd;
-    denum_ *= cd;
-    num_ += denum_ / rhs.denum_ * rhs.num_;
+    int32_t mult = rhs.denom / gcd(denom, rhs.denom);
+    num *= mult;
+    denom *= mult;
+    num += denom / rhs.denom * rhs.num;
     reducing();
     return *this;
 }
-
 Rational& Rational::operator-=(const Rational& rhs) {
-    int32_t cd = rhs.denum_ / gcd(denum_, rhs.denum_);
-    num_ *= cd;
-    denum_ *= cd;
-    num_ -= denum_ / rhs.denum_ * rhs.num_;
+    int32_t mult = rhs.denom / gcd(denom, rhs.denom);
+    num *= mult;
+    denom *= mult;
+    num -= denom / rhs.denom * rhs.num;
     reducing();
     return *this;
 }
-
 Rational& Rational::operator*=(const Rational& rhs) {
-    num_ *= rhs.num_;
-    denum_ *= rhs.denum_;
+    num *= rhs.num;
+    denom *= rhs.denom;
     reducing();
     return *this;
 }
@@ -64,8 +69,8 @@ Rational& Rational::operator/=(const Rational& rhs) {
     if (rhs.isZero()) {
         throw std::overflow_error("Divide by zero exception");
     }
-    num_ *= rhs.denum_;
-    denum_ *= rhs.num_;
+    num *= rhs.denom;
+    denom *= rhs.num;
     reducing();
     return *this;
 }
@@ -74,92 +79,77 @@ Rational& Rational::operator++() {
     *this += 1;
     return *this;
 }
-
+Rational Rational::operator++(int) {
+    Rational tmp(*this);
+    ++(*this);
+    return tmp;
+}
 Rational& Rational::operator--() {
     *this -= 1;
     return *this;
 }
+Rational Rational::operator--(int) {
+    Rational tmp(*this);
+    --(*this);
+    return tmp;
+}
 
 Rational& Rational::operator%=(const Rational& rhs) {
-    int32_t cd = rhs.denum_ / gcd(denum_, rhs.denum_);
-    num_ *= cd;
-    denum_ *= cd;
-    num_ %= denum_ / rhs.denum_ * rhs.num_;
+    int32_t mult = rhs.denom / gcd(denom, rhs.denom);
+    num *= mult;
+    denom *= mult;
+    num %= denom / rhs.denom * rhs.num;
     reducing();
     return *this;
-}
+}                                                     // till here
 
 bool Rational::isPositive() const {  // sign-like methods
-    return num_ > 0;
+    return num > 0;
 }
-
 bool Rational::isZero() const {
-    return num_ == 0;
+    return num == 0;
 }
-
 bool Rational::isNegative() const {
-    return num_ < 0;
+    return num < 0;
 }
 
-std::ostream& operator<<(std::ostream& ostrm,
-    const Rational& rhs) {
-    return rhs.writeTo(ostrm);
-}
 std::istream& operator>>(std::istream& istrm,
     Rational& rhs) {
     return rhs.readFrom(istrm);
 }
 
 
-Rational& operator-(Rational& rhs) {
-    Rational tmp;
-    tmp -= rhs;
-    return tmp;
+Rational& operator+(Rational& rhs) {
+    return rhs;
 }
 
+
 Rational operator+(Rational lhs, const Rational& rhs) {
-    lhs += rhs;
-    return lhs;
+    Rational a = lhs;
+    a += rhs;
+    return a;
 }
 Rational operator-(Rational lhs, const Rational& rhs) {
-    lhs -= rhs;
-    return lhs;
+    Rational a = lhs;
+    a -= rhs;
+    return a;
 }
 Rational operator*(Rational lhs, const Rational& rhs) {
-    lhs *= rhs;
-    return lhs;
+    Rational a = lhs;
+    a *= rhs;
+    return a;
 }
 Rational operator/(Rational lhs, const Rational& rhs) {
-    lhs /= rhs;
-    return lhs;
+    Rational a = lhs;
+    a /= rhs;
+    return a;
 }
 Rational operator%(Rational lhs, const Rational& rhs)
 {
-    lhs %= rhs;
-    return lhs;
+    Rational a = lhs;
+    a %= rhs;
+    return a;
 }
-
-//Rational& Rational::operator++() {
-//    *this += 1;
-//    return *this;
-//}
-//
-//Rational Rational::operator++(int) {
-//    Rational tmp(*this);
-//    ++(*this);
-//    return tmp;
-//}
-//
-//Rational& Rational::operator--() {
-//    *this -= 1;
-//    return *this;
-//}
-//
-//Rational Rational::operator--(int) {
-//    Rational tmp(*this);
-//    --(*this);
-//    return tmp;
-//}
 
 Rational sqr(Rational myRat) {
     myRat *= myRat;
@@ -176,6 +166,65 @@ Rational pow(Rational myRat, int32_t power) {
     }
     return answer;
 }
+
+Rational operator+(const Rational& rhs, const int& a) {
+    Rational b(a);
+    Rational c = rhs;
+    c += b;
+    return c;
+}
+
+Rational operator+(const int& a, const Rational& rhs) {
+    Rational b(a);
+    Rational c = rhs;
+    c += b;
+    return c;
+}
+
+Rational operator-(const Rational& rhs, const int& a) {
+    Rational b(a);
+    Rational c = rhs;
+    c -= b;
+    return c;
+}
+
+Rational operator-(const int& a, const Rational& rhs) {
+    Rational b(a);
+    Rational c = rhs;
+    b -= c;
+    return b;
+}
+
+Rational operator*(const int& a, const Rational& rhs) {
+    Rational b(a);
+    Rational c = rhs;
+    c *= b;
+    return c;
+}
+
+Rational operator*(const Rational& rhs, const int& a) {
+    Rational b(a);
+    Rational c = rhs;
+    c *= b;
+    return c;
+}
+
+Rational operator/(const Rational& lhs, const int32_t& rhs)
+{
+    Rational div(lhs);
+    div /= rhs;
+    return div;
+}
+
+Rational operator/(const int32_t& lhs, const Rational& rhs)
+{
+    Rational div(lhs, 1);
+    div /= rhs;
+    return div;
+}
+
+
+
 
 bool operator==(Rational lhs, const Rational& rhs) {
     lhs -= rhs;
@@ -213,34 +262,43 @@ int32_t Rational::gcd(int32_t a, int32_t b) const {
 }
 
 void Rational::reducing() {  // always reduce to optimize space
-    int32_t dev = gcd(std::abs(num_), denum_);
-    num_ /= dev;
-    denum_ /= dev;
+    int32_t dev = gcd(std::abs(num), denom);
+    num /= dev;
+    denom /= dev;
+}
+
+std::ostream& operator<<(std::ostream& ostrm, const Rational& rhs) {
+    return rhs.writeTo(ostrm);
 }
 
 std::ostream& Rational::writeTo(std::ostream& ostrm) const noexcept {
-    ostrm << num_ / gcd(std::abs(num_), denum_) << slash << denum_ / gcd(std::abs(num_), denum_);
+    ostrm << num / gcd(std::abs(num), denom) << slash << denom / gcd(std::abs(num), denom);
     return ostrm;
 }
 
-std::istream& Rational::readFrom(std::istream& istrm)
-{
-    int32_t numInp(0);
-    char separator(0);
-    int32_t denomInp(0);
-    istrm >> numInp >> separator >> denomInp;
-    if (istrm.good()) {
-        if (Rational::slash == separator) {
-            if (denomInp <= 0) {
-                throw std::invalid_argument("Expected positive denominator");
-            }
-            num_ = numInp;
-            denum_ = denomInp;
-            reducing();
-        }
-        else {
-            istrm.setstate(std::ios_base::failbit);
-        }
+std::istream& Rational::readFrom(std::istream& istrm) {
+    char comma{ 0 };
+    int32_t numerator{ 0 };
+    int32_t denumerator{ 0 };
+    istrm >> numerator;
+    if (isspace(istrm.peek())) {
+        istrm.setstate(std::ios_base::failbit);
+        istrm.setstate(std::ios_base::eofbit);
+    }
+    istrm >> comma;
+    if (int(comma) != 47 || isspace(istrm.peek())) {
+        istrm.setstate(std::ios_base::failbit);
+        istrm.setstate(std::ios_base::eofbit);
+    }
+    istrm >> denumerator;
+    if (denumerator <= 0) {
+        istrm.setstate(std::ios_base::failbit);
+        istrm.setstate(std::ios_base::eofbit);
+    }
+    if (istrm.fail() == false) {
+        num = numerator;
+        denom = denumerator;
+        reducing();
     }
     return istrm;
 }

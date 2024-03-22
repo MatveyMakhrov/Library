@@ -70,7 +70,7 @@ void ArrayD::resize(const std::ptrdiff_t new_size) {
         throw std::invalid_argument("New size must be greater than 0");
     }
     if (new_size <= size_) {
-        size_ = new_size;
+        size_ = new_size; 
         return;
     }
     if (new_size > capacity_) {

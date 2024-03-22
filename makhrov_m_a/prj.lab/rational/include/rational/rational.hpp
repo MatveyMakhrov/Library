@@ -38,8 +38,8 @@ private:
     int32_t gcd(int32_t a, int32_t b) const;
     void reducing();
 private:
-    int32_t num_{ 0 };
-    int32_t denum_{ 1 };
+    int32_t num{ 0 };
+    int32_t denom{ 1 };
 
     static const char slash{ '/' };
 };
